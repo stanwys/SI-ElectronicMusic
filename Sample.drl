@@ -1,0 +1,503 @@
+package com.sample
+ 
+import com.sample.DroolsTest.Message;
+import com.sample.DroolsTest.Pytanie;
+import com.sample.DroolsTest.Odpowiedz;
+import com.sample.DroolsTest.Window;
+import javax.swing.JOptionPane;
+ /*
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( myMessage );
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+        System.out.println( myMessage );
+end
+*/
+rule "init"
+	when
+	then
+		//inicjalizacja obiektow
+		Pytanie p=new Pytanie();
+		Odpowiedz o=new Odpowiedz();
+		p.setQuestion("What do you prefer");
+		o.setQue("What do you prefer");
+		//generuje odpowiedzi
+		String[] possible = new String[2];
+		possible[0]="Rock";
+		possible[1]="Rap";
+		Window.wyswietl(p,o,possible);
+		insert(p);insert(o);
+end
+
+rule "koniec"
+	when
+		o:Odpowiedz(ans=="OK")
+	then
+		System.out.print("Your preference is "+o.getQue());
+		//System.exit(0);
+end
+
+rule "start Rock"
+	when
+		p: Pytanie(question=="What do you prefer",answer=="Rock")
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Radiohead - OK Computer";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="Cool, but that's basically just rock music!";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "start Rap"
+	when
+		p: Pytanie(question=="What do you prefer",answer=="Rap")
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Kanye West - 808s & Heartbreak";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="Give me some nice hip-hop beats";
+		possible[2]="Come on, I want REAL rap music";
+		//gui -> combobox
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+	
+rule "Nujabes - Metaphorical Music"
+	when
+		(p: Pytanie(question=="Kanye West - 808s & Heartbreak",
+		answer=="Give me some nice hip-hop beats"))
+		or
+		(p: Pytanie(question=="Bonobo - Black Sands",
+		answer=="I need more of these lush, organic sounds"))
+		or
+		(p: Pytanie(question=="Shopping Aisle",
+		answer=="I'm liking these instrumental beats. More please"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Nujabes - Metaphorical Music";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="I need more of these lush, organic sounds";
+		possible[2]="Stranger! Wonkier!";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end	
+
+rule "Girl Talk - Feed the Animals"
+	when
+		(p: Pytanie(question=="Kanye West - 808s & Heartbreak",
+		answer=="Come on, I want REAL rap music"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Girl Talk - Feed the Animals";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="Whoa, sampling is cool, more like this!";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end	
+	
+rule "The Avalanches - Since I Left You"
+	when
+		(p: Pytanie(question=="Girl Talk - Feed the Animals",
+		answer=="Whoa, sampling is cool, more like this!"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="The Avalanches - Since I Left You";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="More sampling, with a hip-hop vibe to it";
+		possible[2]="Darker. Sadder. The samples could be messed with a little more";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end		
+
+rule "Shopping Aisle"
+	when
+		(p: Pytanie(question=="The Avalanches - Since I Left You",
+		answer=="More sampling, with a hip-hop vibe to it"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Shopping Aisle";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="I'm liking these instrumental beats. More please";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end	
+	
+rule "Radiohead - Kid A"
+	when
+		p: Pytanie(question=="Radiohead - OK Computer",answer=="Cool, but that's basically just rock music!")
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Radiohead - Kid A";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[5];
+		possible[0]="OK";
+		possible[1]="Cool, but I'm not quite ready to lose the guitars quite yet";
+		possible[2]="Weird, but good! Maybe more electronic, but I still want vocals";
+		possible[3]="Even this is too much electronic for me";
+		possible[4]="I actually liked the drums and bleeps they had going on. More of that";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Darkside - Psychic"
+	when
+		(p: Pytanie(question=="Radiohead - Kid A",answer=="Cool, but I'm not quite ready to lose the guitars quite yet")) 
+		or 
+		(p:Pytanie(question=="The Knife - Silent Shout",answer=="Too weird!"))
+	
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Darkside - Psychic";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[4];
+		possible[0]="OK";
+		possible[1]="Where can I go from here?";
+		possible[2]="I like this.We can lose the guitars and stuff now. I'm ready";
+		possible[3]="More of the same, nut I think I'm ready for electronic music now";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "The Knife - Silent Shout"
+	when
+		p: Pytanie(question=="Radiohead - Kid A",answer=="Weird, but good! Maybe more electronic, but I still want vocals") 
+		
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="The Knife - Silent Shout";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="Too weird!";
+		possible[2]="Take out the vocals. Focus it.";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Godspeed You!"
+	when
+		p: Pytanie(question=="Radiohead - Kid A",
+		answer=="Even this is too much electronic for me") 
+		
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Godspeed You!";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[4];
+		possible[0]="OK";
+		possible[1]="I love those buildsups! I could try some electronic music that does that";
+		possible[2]="I think I could handle that, but way more minimal";
+		possible[3]="I like the post-rock song structure and scale";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Fuck Buttons - Tarot Sport"
+	when
+		p: Pytanie(question=="Godspeed You!",
+		answer=="I love those buildsups! I could try some electronic music that does that") 
+		
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Fuck Buttons - Tarot Sport";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="More, quieter though";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Neu! - Neu!"
+	when
+		p: Pytanie(question=="Godspeed You!",
+		answer=="I think I could handle that, but way more minimal") 
+		
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Neu! - Neu!";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="More electronic influence";
+		possible[2]="This, but electronic";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Kashiwa Daisuke - Program Music"
+	when
+		p: Pytanie(question=="Godspeed You!",
+		answer=="I like the post-rock song structure and scale") 
+		
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Kashiwa Daisuke - Program Music";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="I like the glitchy drums";
+		possible[2]="I like the more ambient parts";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Autechre - Amber"
+	when
+		(p: Pytanie(question=="Radiohead - Kid A",
+		answer=="I actually liked the drums and bleeps they had going on. More of that"))
+		or
+		(p: Pytanie(question=="Kashiwa Daisuke - Program Music",
+		answer=="I like the glitchy drums")) 
+		or
+		(p: Pytanie(question=="Klaus Schulze",
+		answer=="More drums")) 
+		or
+		(p: Pytanie(question=="Aphex Twin - Drukqs/ Selected Ambient Works",
+		answer=="Cool, I guess electronic music isn't just talentless button pushing. More like this")) 
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Autechre - Amber";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="Cool, I guess electronic music isn't just talentless button pushing. More like this";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Aphex Twin - Drukqs/ Selected Ambient Works"
+	when
+		(p: Pytanie(question=="Radiohead - Kid A",
+		answer=="I actually liked the drums and bleeps they had going on. More of that"))
+		or
+		(p: Pytanie(question=="Boards of Canada - Music Has the Right to Children",
+		answer=="I want something more \"electric feeling\"")) 
+		or
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="I can deal with the weird parts. I think I'm ready for the classics")) 
+		or
+		(p: Pytanie(question=="Autechre - Amber",
+		answer=="Cool, I guess electronic music isn't just talentless button pushing. More like this")) 
+	then
+		//inicjalizacja obiektow
+		Odpowiedz o=new Odpowiedz();
+		String q="Aphex Twin - Drukqs/ Selected Ambient Works";
+		p.setQuestion(q);
+		o.setQue(q);
+		//generuje odpowiedzi
+		String[] possible = new String[6];
+		possible[0]="OK";
+		possible[1]="Cool, I guess electronic music isn't just talentless button pushing. More like this";
+		possible[2]="I can't wrap my head around these drums, but I like the rest of it. No drums";
+		possible[3]="Let's get a steady beat on that";
+		possible[4]="These complex beats are awesome. Can they get wilder?";
+		possible[5]="That sounds dated. Something more recent?";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Nicolas Jarr - Space is Only Noise"
+	when
+		p: Pytanie(question=="Darkside - Psychic",
+		answer=="More of the same, nut I think I'm ready for electronic music now")
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Nicolas Jarr - Space is Only Noise";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="This is much too busy and melodius for my tastes";
+		possible[2]="More of a vocal focus";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Bonobo - Black Sands"
+	when
+		(p: Pytanie(question=="Darkside - Psychic",
+		answer=="Where can I go from here?"))
+		or
+		(p: Pytanie(question=="Nujabes - Metaphorical Music",
+		answer=="I need more of these lush, organic sounds"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Bonobo - Black Sands";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="I need more of these lush, organic sounds";
+		possible[2]="Chill it out";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Tycho - Dive"
+	when
+		p: Pytanie(question=="Bonobo - Black Sands",
+		answer=="Chill it out")
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Tycho - Dive";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="Make it stranger. I want to listen to an educational film from the eighties";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Boards of Canada - Music Has the Right to Children"
+	when
+		(p: Pytanie(question=="Tycho - Dive",
+		answer=="Make it stranger. I want to listen to an educational film from the eighties"))
+		or
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="I like those beats. What if they were a bit more spread out?"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Boards of Canada - Music Has the Right to Children";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="I want something more \"electric feeling\"";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "TOKiMONSTA - Midnight Menu"
+	when
+		(p: Pytanie(question=="The Knife - Silent Shout",
+		answer=="Take out the vocals. Focus it"))
+		or
+		(p: Pytanie(question=="Nujabes - Metaphorical Music",
+		answer=="Stranger! Wonkier!"))
+		or
+		(p: Pytanie(question=="Burial - Untrue",
+		answer=="Happier, Lighter, Focus on the beats, not the vocals"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="TOKiMONSTA - Midnight Menu";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[5];
+		possible[0]="OK";
+		possible[1]="Keep the beats, but make it dark and operatic";
+		possible[2]="Even stranger! Even wonkier!";
+		possible[3]="I like those beats. What if they were a bit more spaced out?";
+		possible[4]="I can deal with the weird parts. I think I'm ready for the classics";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Burial - Untrue"
+	when
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="Keep the beats, but make it dark and operatic"))
+		or
+		(p: Pytanie(question=="The Avalanches - Since I Left You",
+		answer=="Darker. Sadder. The samples could be messed with a little more"))
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Burial - Untrue";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[3];
+		possible[0]="OK";
+		possible[1]="Happier, Lighter, Focus on the beats, not the vocals";
+		possible[2]="Drop the samples, keep the nice beats and dark atmosphere";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "Massive Attack - Mezzanine"
+	when
+		p: Pytanie(question=="Burial - Untrue",
+		answer=="Drop the samples, keep the nice beats and dark atmosphere")
+	then
+		Odpowiedz o=new Odpowiedz();
+		String q="Massive Attack - Mezzanine";
+		p.setQuestion(q);o.setQue(q);
+		String[] possible = new String[2];
+		possible[0]="OK";
+		possible[1]="I liked the feel of burial a little better";
+		Window.wyswietl(p,o,possible);
+		update(p);insert(o);
+end
+
+rule "James Blake"
+	when
+		(p: Pytanie(question=="Burial - Untrue",
+		answer=="Drop the samples, keep the nice beats and dark atmosphere"))
+		or
+		(p: Pytanie(question=="Massive Attack - Mezzanine",
+		answer=="I liked the feel of burial a little better"))
+		or
+		(p: Pytanie(question=="Nicolas Jarr - Space is Only Noise",
+		answer=="More of a vocal focus"))
+		or
+		(p: Pytanie(question=="Darkside - Psychic",
+		answer=="I like this. We can lose the guitars and stuff now. I'm ready"))
+		
+	then
+		System.out.print("Your preference is James Blake");
+end
+
+/*
+String[] possible = new String[ps.listKG.size()];
+String selectedValue = (String)JOptionPane.showInputDialog(null,
+             "Choose one", "Jaka karta graficzna ",
+             JOptionPane.INFORMATION_MESSAGE, null,
+             possible, possible[0]);
+          */
