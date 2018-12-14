@@ -1,0 +1,623 @@
+package com.sample
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+declare Pytanie
+	question : String
+	answer : String
+end
+
+declare Odpowiedz
+	que : String 
+	ans : String
+end
+ 
+rule "init"
+	when
+	then
+		String ans = WindowGUI.wyswietl(MyData.START.getAnswers(),MyData.START.getQuestion());
+		insert(new Odpowiedz(MyData.START.getQuestion(), ans));
+		insert(new Pytanie(MyData.START.getQuestion(), ans));
+end
+
+rule "koniec"
+	when
+		o:Odpowiedz(ans=="OK")
+	then
+		WindowGUI.koniec(o.getQue());
+		//System.exit(0);
+end
+
+rule "start Rock"
+	when
+		p: Pytanie(question=="What do you prefer?",answer=="Rock")
+	then
+		String ans = WindowGUI.wyswietl(MyData.START_ROCK.getAnswers(),MyData.START_ROCK.getQuestion());
+		insert(new Odpowiedz(MyData.START_ROCK.getQuestion(), ans));
+		p.setQuestion(MyData.START_ROCK.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "start Rap"
+	when
+		p: Pytanie(question=="What do you prefer?",answer=="Rap")
+	then
+		String ans = WindowGUI.wyswietl(MyData.START_RAP.getAnswers(),MyData.START_RAP.getQuestion());
+		insert(new Odpowiedz(MyData.START_RAP.getQuestion(), ans));
+		p.setQuestion(MyData.START_RAP.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+	
+rule "Nujabes - Metaphorical Music"
+	when
+		(p: Pytanie(question=="Kanye West - 808s & Heartbreak",
+		answer=="Give me some nice hip-hop beats"))
+		or
+		(p: Pytanie(question=="Bonobo - Black Sands",
+		answer=="I need more of these lush, organic sounds"))
+		or
+		(p: Pytanie(question=="Shopping Aisle",
+		answer=="I'm liking these instrumental beats. More please"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.NUJABES.getAnswers(),MyData.NUJABES.getQuestion());
+		insert(new Odpowiedz(MyData.NUJABES.getQuestion(), ans));
+		p.setQuestion(MyData.NUJABES.getQuestion());p.setAnswer(ans);
+		update(p);
+end	
+
+rule "Girl Talk - Feed the Animals"
+	when
+		(p: Pytanie(question=="Kanye West - 808s & Heartbreak",
+		answer=="Come on, I want REAL rap music"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.GIRL_TALK.getAnswers(),MyData.GIRL_TALK.getQuestion());
+		insert(new Odpowiedz(MyData.GIRL_TALK.getQuestion(), ans));
+		p.setQuestion(MyData.GIRL_TALK.getQuestion());p.setAnswer(ans);
+		update(p);
+end	
+	
+rule "The Avalanches - Since I Left You"
+	when
+		(p: Pytanie(question=="Girl Talk - Feed the Animals",
+		answer=="Whoa, sampling is cool, more like this!"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.THE_AVALANCHES.getAnswers(),MyData.THE_AVALANCHES.getQuestion());
+		insert(new Odpowiedz(MyData.THE_AVALANCHES.getQuestion(), ans));
+		p.setQuestion(MyData.THE_AVALANCHES.getQuestion());p.setAnswer(ans);
+		update(p);
+end		
+
+rule "Shopping Aisle"
+	when
+		(p: Pytanie(question=="The Avalanches - Since I Left You",
+		answer=="More sampling, with a hip-hop vibe to it"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.SHOPPING_AISLE.getAnswers(),MyData.SHOPPING_AISLE.getQuestion());
+		insert(new Odpowiedz(MyData.SHOPPING_AISLE.getQuestion(), ans));
+		p.setQuestion(MyData.SHOPPING_AISLE.getQuestion());p.setAnswer(ans);
+		update(p);
+end	
+	
+rule "Radiohead - Kid A"
+	when
+		p: Pytanie(question=="Radiohead - OK Computer",answer=="Cool, but that's basically just rock music!")
+	then
+		String ans = WindowGUI.wyswietl(MyData.RADIOHEAD_KIDA.getAnswers(),MyData.RADIOHEAD_KIDA.getQuestion());
+		insert(new Odpowiedz(MyData.RADIOHEAD_KIDA.getQuestion(), ans));
+		p.setQuestion(MyData.RADIOHEAD_KIDA.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Darkside - Psychic"
+	when
+		(p: Pytanie(question=="Radiohead - Kid A",answer=="Cool, but I'm not quite ready to lose the guitars quite yet")) 
+		or 
+		(p:Pytanie(question=="The Knife - Silent Shout",answer=="Too weird!"))
+	
+	then
+		String ans = WindowGUI.wyswietl(MyData.DARKSIDE.getAnswers(),MyData.DARKSIDE.getQuestion());
+		insert(new Odpowiedz(MyData.DARKSIDE.getQuestion(), ans));
+		p.setQuestion(MyData.DARKSIDE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "The Knife - Silent Shout"
+	when
+		p: Pytanie(question=="Radiohead - Kid A",answer=="Weird, but good! Maybe more electronic, but I still want vocals") 
+		
+	then
+		String ans = WindowGUI.wyswietl(MyData.THE_KNIFE.getAnswers(),MyData.THE_KNIFE.getQuestion());
+		insert(new Odpowiedz(MyData.THE_KNIFE.getQuestion(), ans));
+		p.setQuestion(MyData.THE_KNIFE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Godspeed You!"
+	when
+		p: Pytanie(question=="Radiohead - Kid A",
+		answer=="Even this is too much electronic for me") 
+		
+	then
+		String ans = WindowGUI.wyswietl(MyData.GODSPEED_YOU.getAnswers(),MyData.GODSPEED_YOU.getQuestion());
+		insert(new Odpowiedz(MyData.GODSPEED_YOU.getQuestion(), ans));
+		p.setQuestion(MyData.GODSPEED_YOU.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Fuck Buttons - Tarot Sport"
+	when
+		p: Pytanie(question=="Godspeed You!",
+		answer=="I love those buildsups! I could try some electronic music that does that") 
+		
+	then
+		String ans = WindowGUI.wyswietl(MyData.FUCK_BUTTONS.getAnswers(),MyData.FUCK_BUTTONS.getQuestion());
+		insert(new Odpowiedz(MyData.FUCK_BUTTONS.getQuestion(), ans));
+		p.setQuestion(MyData.FUCK_BUTTONS.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Neu! - Neu!"
+	when
+		p: Pytanie(question=="Godspeed You!",
+		answer=="I think I could handle that, but way more minimal") 
+	then
+		String ans = WindowGUI.wyswietl(MyData.NEU_NEU.getAnswers(),MyData.NEU_NEU.getQuestion());
+		insert(new Odpowiedz(MyData.NEU_NEU.getQuestion(), ans));
+		p.setQuestion(MyData.NEU_NEU.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Kashiwa Daisuke - Program Music"
+	when
+		(p: Pytanie(question=="Godspeed You!",
+		answer=="I like the post-rock song structure and scale")) 
+		or
+		(p: Pytanie(question=="Venetian Snares",
+		answer=="Calm down those drums. I like the orchestral samples though"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.KASH_DAISUKE.getAnswers(),MyData.KASH_DAISUKE.getQuestion());
+		insert(new Odpowiedz(MyData.KASH_DAISUKE.getQuestion(), ans));
+		p.setQuestion(MyData.KASH_DAISUKE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Autechre - Amber"
+	when
+		(p: Pytanie(question=="Radiohead - Kid A",
+		answer=="I actually liked the drums and bleeps they had going on. More of that"))
+		or
+		(p: Pytanie(question=="Kashiwa Daisuke - Program Music",
+		answer=="I like the glitchy drums")) 
+		or
+		(p: Pytanie(question=="Klaus Schulze",
+		answer=="More drums")) 
+		or
+		(p: Pytanie(question=="Aphex Twin - Drukqs/ Selected Ambient Works",
+		answer=="Cool, I guess electronic music isn't just talentless button pushing. More like this")) 
+	then
+		String ans = WindowGUI.wyswietl(MyData.AUTECHRE_AMBER.getAnswers(),MyData.AUTECHRE_AMBER.getQuestion());
+		insert(new Odpowiedz(MyData.AUTECHRE_AMBER.getQuestion(), ans));
+		p.setQuestion(MyData.AUTECHRE_AMBER.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Aphex Twin - Drukqs/ Selected Ambient Works"
+	when
+		(p: Pytanie(question=="Radiohead - Kid A",
+		answer=="I actually liked the drums and bleeps they had going on. More of that"))
+		or
+		(p: Pytanie(question=="Boards of Canada - Music Has the Right to Children",
+		answer=="I want something more \"electric feeling\"")) 
+		or
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="I can deal with the weird parts. I think I'm ready for the classics")) 
+		or
+		(p: Pytanie(question=="Autechre - Amber",
+		answer=="Cool, I guess electronic music isn't just talentless button pushing. More like this")) 
+	then
+		String ans = WindowGUI.wyswietl(MyData.APHEX_TWIN.getAnswers(),MyData.APHEX_TWIN.getQuestion());
+		insert(new Odpowiedz(MyData.APHEX_TWIN.getQuestion(), ans));
+		p.setQuestion(MyData.APHEX_TWIN.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Nicolas Jarr - Space is Only Noise"
+	when
+		p: Pytanie(question=="Darkside - Psychic",
+		answer=="More of the same, nut I think I'm ready for electronic music now")
+	then
+		String ans = WindowGUI.wyswietl(MyData.NICOLAS_JARR.getAnswers(),MyData.NICOLAS_JARR.getQuestion());
+		insert(new Odpowiedz(MyData.NICOLAS_JARR.getQuestion(), ans));
+		p.setQuestion(MyData.NICOLAS_JARR.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Bonobo - Black Sands"
+	when
+		(p: Pytanie(question=="Darkside - Psychic",
+		answer=="Where can I go from here?"))
+		or
+		(p: Pytanie(question=="Nujabes - Metaphorical Music",
+		answer=="I need more of these lush, organic sounds"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.BONOBO.getAnswers(),MyData.BONOBO.getQuestion());
+		insert(new Odpowiedz(MyData.BONOBO.getQuestion(), ans));
+		p.setQuestion(MyData.BONOBO.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Tycho - Dive"
+	when
+		p: Pytanie(question=="Bonobo - Black Sands",
+		answer=="Chill it out")
+	then
+		String ans = WindowGUI.wyswietl(MyData.TYCHO_DIVE.getAnswers(),MyData.TYCHO_DIVE.getQuestion());
+		insert(new Odpowiedz(MyData.TYCHO_DIVE.getQuestion(), ans));
+		p.setQuestion(MyData.TYCHO_DIVE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Boards of Canada - Music Has the Right to Children"
+	when
+		(p: Pytanie(question=="Tycho - Dive",
+		answer=="Make it stranger. I want to listen to an educational film from the eighties"))
+		or
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="I like those beats. What if they were a bit more spread out?"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.BOARDS_CANADA.getAnswers(),MyData.BOARDS_CANADA.getQuestion());
+		insert(new Odpowiedz(MyData.BOARDS_CANADA.getQuestion(), ans));
+		p.setQuestion(MyData.BOARDS_CANADA.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "TOKiMONSTA - Midnight Menu"
+	when
+		(p: Pytanie(question=="The Knife - Silent Shout",
+		answer=="Take out the vocals. Focus it"))
+		or
+		(p: Pytanie(question=="Nujabes - Metaphorical Music",
+		answer=="Stranger! Wonkier!"))
+		or
+		(p: Pytanie(question=="Burial - Untrue",
+		answer=="Happier, Lighter, Focus on the beats, not the vocals"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.TOKIMONSTA.getAnswers(),MyData.TOKIMONSTA.getQuestion());
+		insert(new Odpowiedz(MyData.TOKIMONSTA.getQuestion(), ans));
+		p.setQuestion(MyData.TOKIMONSTA.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Burial - Untrue"
+	when
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="Keep the beats, but make it dark and operatic"))
+		or
+		(p: Pytanie(question=="The Avalanches - Since I Left You",
+		answer=="Darker. Sadder. The samples could be messed with a little more"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.BURIAL.getAnswers(),MyData.BURIAL.getQuestion());
+		insert(new Odpowiedz(MyData.BURIAL.getQuestion(), ans));
+		p.setQuestion(MyData.BURIAL.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Massive Attack - Mezzanine"
+	when
+		p: Pytanie(question=="Burial - Untrue",
+		answer=="Drop the samples, keep the nice beats and dark atmosphere")
+	then
+		String ans = WindowGUI.wyswietl(MyData.MASSIVE_ATTACK.getAnswers(),MyData.MASSIVE_ATTACK.getQuestion());
+		insert(new Odpowiedz(MyData.MASSIVE_ATTACK.getQuestion(), ans));
+		p.setQuestion(MyData.MASSIVE_ATTACK.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "James Blake"
+	when
+		(p: Pytanie(question=="Burial - Untrue",
+		answer=="Drop the samples, keep the nice beats and dark atmosphere"))
+		or
+		(p: Pytanie(question=="Massive Attack - Mezzanine",
+		answer=="I liked the feel of burial a little better"))
+		or
+		(p: Pytanie(question=="Nicolas Jarr - Space is Only Noise",
+		answer=="More of a vocal focus"))
+		or
+		(p: Pytanie(question=="Darkside - Psychic",
+		answer=="I like this. We can lose the guitars and stuff now. I'm ready"))
+		
+	then
+		WindowGUI.koniec("James Blake");
+end
+
+rule "Flying Lotus"
+	when
+		(p: Pytanie(question=="Aphex Twin - Drukqs/ Selected Ambient Works",
+		answer=="That sounds dated. Something more recent ?"))
+		or
+		(p: Pytanie(question=="TOKiMONSTA - Midnight Menu",
+		answer=="Even stranger! Even wonkier!"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.FLYING_LOTUS.getAnswers(),MyData.FLYING_LOTUS.getQuestion());
+		insert(new Odpowiedz(MyData.FLYING_LOTUS.getQuestion(), ans));
+		p.setQuestion(MyData.FLYING_LOTUS.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Lone - Galaxy Garden"
+	when
+		p: Pytanie(question=="Flying Lotus - Cosmogramma",
+		answer=="I want this, but in a jungle")
+	then
+		String ans = WindowGUI.wyswietl(MyData.LONE.getAnswers(),MyData.LONE.getQuestion());
+		insert(new Odpowiedz(MyData.LONE.getQuestion(), ans));
+		p.setQuestion(MyData.LONE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Future Sound - Lifeforms"
+	when
+		(p: Pytanie(question=="Lone - Galaxy Garden",
+		answer=="Rainforest music, but slightly less crazy"))
+		or
+		(p: Pytanie(question=="The future Sound of London - Accelerator",
+		answer=="More!"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.FS_LIFEFORMS.getAnswers(),MyData.FS_LIFEFORMS.getQuestion());
+		insert(new Odpowiedz(MyData.FS_LIFEFORMS.getQuestion(), ans));
+		p.setQuestion(MyData.FS_LIFEFORMS.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Machinedrum - Room(s)"
+	when
+		(p: Pytanie(question=="Lone - Galaxy Garden",
+		answer=="I loved the strange vocals that a few of the tracks had. And the drums"))
+		or
+		(p: Pytanie(question=="Aphex Twin - Drukqs/ Selected Ambient Works",
+		answer=="These complex beats are awesome. Can they get wilder?"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.MACHINEDRUM.getAnswers(),MyData.MACHINEDRUM.getQuestion());
+		insert(new Odpowiedz(MyData.MACHINEDRUM.getQuestion(), ans));
+		p.setQuestion(MyData.MACHINEDRUM.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Venetian Snares"
+	when
+		p: Pytanie(question=="Machinedrum - Room(s)",
+		answer=="Those drums. 10 times louder. 10 times crazier")
+	then
+		String ans = WindowGUI.wyswietl(MyData.VENETIAN.getAnswers(),MyData.VENETIAN.getQuestion());
+		insert(new Odpowiedz(MyData.VENETIAN.getQuestion(), ans));
+		p.setQuestion(MyData.VENETIAN.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Manuel Gottsching"
+	when
+		p: Pytanie(question=="Neu! - Neu!",
+		answer=="More electronic influence")
+	then
+		String ans = WindowGUI.wyswietl(MyData.MANUEL_GOTT.getAnswers(),MyData.MANUEL_GOTT.getQuestion());
+		insert(new Odpowiedz(MyData.MANUEL_GOTT.getQuestion(), ans));
+		p.setQuestion(MyData.MANUEL_GOTT.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Tangerine Dream"
+	when
+		(p: Pytanie(question=="Neu! - Neu!",
+		answer=="This, but electronic"))
+		or
+		(p: Pytanie(question=="Kashiwa Daisuke - Program Music",
+		answer=="I like the more ambient parts"))
+		or
+		(p: Pytanie(question=="Fuck Buttons - Tarot Sport",
+		answer=="More, quieter though"))
+		or
+		(p: Pytanie(question=="Manuel Gottsching -e2-e4",
+		answer=="Fully electronic now"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.TANGERINE.getAnswers(),MyData.TANGERINE.getQuestion());
+		insert(new Odpowiedz(MyData.TANGERINE.getQuestion(), ans));
+		p.setQuestion(MyData.TANGERINE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Klaus Schulze"
+	when
+		p: Pytanie(question=="Aphex Twin - Drukqs/ Selected Ambient Works",
+		answer=="I can't wrap my head around these drums, but I like the rest of it. No drums")
+	then
+		String ans = WindowGUI.wyswietl(MyData.KLAUS_SCHULZE.getAnswers(),MyData.KLAUS_SCHULZE.getQuestion());
+		insert(new Odpowiedz(MyData.KLAUS_SCHULZE.getQuestion(), ans));
+		p.setQuestion(MyData.KLAUS_SCHULZE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Mort Garrison"
+	when
+		p: Pytanie(question=="Tangerine Dream - Phaedra",
+		answer=="This style of synths, but shorter songs and carelessly happy")
+		then
+		WindowGUI.koniec("Mort Garrison - Plantasia");
+end
+
+rule "Orb Adventures"
+	when
+		(p: Pytanie(question=="Aphex Twin - Drukqs/ Selected Ambient Works",
+		answer=="Let's get a steady beat on that"))
+		or
+		(p: Pytanie(question=="Klaus Schulze",
+		answer=="Let's get a steady beat on that"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.ORB.getAnswers(),MyData.ORB.getQuestion());
+		insert(new Odpowiedz(MyData.ORB.getQuestion(), ans));
+		p.setQuestion(MyData.ORB.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Future Sound - Accelerator"
+	when
+		p: Pytanie(question=="Orb - The Orb's Adventures",
+		answer=="Something a little bit less ambient maybe")
+	then
+		String ans = WindowGUI.wyswietl(MyData.FS_ACCELERATOR.getAnswers(),MyData.FS_ACCELERATOR.getQuestion());
+		insert(new Odpowiedz(MyData.FS_ACCELERATOR.getQuestion(), ans));
+		p.setQuestion(MyData.FS_ACCELERATOR.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Goldie - Timeless"
+	when
+		(p: Pytanie(question=="The Future Sound of London - Accelerator",
+		answer=="Mix these two, but focus on fast, hard hitting drums"))
+		or
+		(p: Pytanie(question=="Shpongle - Are You Shpongled?",
+		answer=="Mix these two, but focus on fast, hard hitting drums"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.GOLDIE_TIMELESS.getAnswers(),MyData.GOLDIE_TIMELESS.getQuestion());
+		insert(new Odpowiedz(MyData.GOLDIE_TIMELESS.getQuestion(), ans));
+		p.setQuestion(MyData.GOLDIE_TIMELESS.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Shpongle"
+	when
+		(p: Pytanie(question=="The Future Sound of London - Accelerator",
+		answer=="I want to feel like I'm on drugs"))
+		or
+		(p: Pytanie(question=="Daft Punk - Discovery",
+		answer=="Fun stuff, but could it get a little more... Tribal?"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.SHPONGLE.getAnswers(),MyData.SHPONGLE.getQuestion());
+		insert(new Odpowiedz(MyData.SHPONGLE.getQuestion(), ans));
+		p.setQuestion(MyData.SHPONGLE.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Orbital - Brown Album"
+	when
+		p: Pytanie(question=="Daft Punk - Discovery",
+		answer=="I don't ever want to stop dancing")
+	then
+		String ans = WindowGUI.wyswietl(MyData.ORBITAL_BROWN.getAnswers(),MyData.ORBITAL_BROWN.getQuestion());
+		insert(new Odpowiedz(MyData.ORBITAL_BROWN.getQuestion(), ans));
+		p.setQuestion(MyData.ORBITAL_BROWN.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Daft Punk - Discovery"
+	when
+		(p: Pytanie(question=="Orbital - Brown Album",
+		answer=="I don't ever want to stop dancing"))
+		or
+		(p: Pytanie(question=="Jon Hopkins - Immunity",
+		answer=="I liked the heavier bits, Collider for example"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.DAFT_PUNK.getAnswers(),MyData.DAFT_PUNK.getQuestion());
+		insert(new Odpowiedz(MyData.DAFT_PUNK.getQuestion(), ans));
+		p.setQuestion(MyData.DAFT_PUNK.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Jon Hopkins"
+	when
+		(p: Pytanie(question=="Orbital - Brown Album",
+		answer=="Mix the two"))
+		or
+		(p: Pytanie(question=="Brian Eno - Ambient 2:The Plateaux of Mirror",
+		answer=="Mix the two"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.JON_HOPKINS.getAnswers(),MyData.JON_HOPKINS.getQuestion());
+		insert(new Odpowiedz(MyData.JON_HOPKINS.getQuestion(), ans));
+		p.setQuestion(MyData.JON_HOPKINS.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Global Communication"
+	when
+		(p: Pytanie(question=="Orbital - Brown Album",
+		answer=="I liked Halcyon + On + ON"))
+		or
+		(p: Pytanie(question=="The future Sound of London - Lifeforms",
+		answer=="I think I'm ready for some ambient now"))
+		or
+		(p: Pytanie(question=="Tangerine Dream - Phaedra",
+		answer=="More Ambient Stuff"))
+	then
+		String ans = WindowGUI.wyswietl(MyData.GLOBAL_COMMU.getAnswers(),MyData.GLOBAL_COMMU.getQuestion());
+		insert(new Odpowiedz(MyData.GLOBAL_COMMU.getQuestion(), ans));
+		p.setQuestion(MyData.GLOBAL_COMMU.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Brian Eno 2"
+	when
+		p: Pytanie(question=="Global Communication - 76:14",
+		answer=="Even more ambient")
+	then
+		String ans = WindowGUI.wyswietl(MyData.BRIAN_ENO2.getAnswers(),MyData.BRIAN_ENO2.getQuestion());
+		insert(new Odpowiedz(MyData.BRIAN_ENO2.getQuestion(), ans));
+		p.setQuestion(MyData.BRIAN_ENO2.getQuestion());p.setAnswer(ans);
+		update(p);
+end
+
+rule "Brian Eno 1"
+	when
+		p: Pytanie(question=="Brian Eno - Ambient 2:The Plateaux of Mirror",
+		answer=="This album is too busy for me")
+		then
+		WindowGUI.koniec("Brian Eno - Ambient 1: Music for Airports");
+end
+
+rule "Helios - Eingya"
+	when
+		p: Pytanie(question=="Jon Hopkins - Immunity",
+		answer=="I liked the piano, but not the heavy parts")
+		then
+		WindowGUI.koniec("Helios - Eingya");
+end
+
+rule "Justice - Cross"
+	when
+		p: Pytanie(question=="Daft Punk - Discovery",
+		answer=="DIRTIER")
+		then
+		WindowGUI.koniec("Justice - Cross");
+end
+
+rule "Sasha & John"
+	when
+		(p: Pytanie(question=="Goldie - Timeless",
+		answer=="This, but I want to feel like I'm exploring a frozen wasteland"))
+		or
+		(p: Pytanie(question=="Shpongle - Are You Shpongled?",
+		answer=="I like this careless, fun music I can kind of dance to. Give me a big, essential, diverse collection of it"))
+		or
+		(p: Pytanie(question=="Daft Punk - Discovery",
+		answer=="I like this careless, fun music I can kind of dance to. Give me a big, essential, diverse collection of it"))
+		then
+		WindowGUI.koniec("Sasha & John Digweed - Northern Exposure");
+end
+
+rule "Villalobos - Alcachofa"
+	when
+		(p: Pytanie(question=="Orbital - Brown Album",
+		answer=="Less melody, more subtle"))
+		or
+		(p: Pytanie(question=="Nicolas Jarr - Space is Only Noise",
+		answer=="This is much too busy and melodius for my tastes"))
+		then
+		WindowGUI.koniec("Villalobos - Alcachofa");
+end
+/*
+String[] possible = new String[ps.listKG.size()];
+String selectedValue = (String)JOptionPane.showInputDialog(null,
+             "Choose one", "Jaka karta graficzna ",
+             JOptionPane.INFORMATION_MESSAGE, null,
+             possible, possible[0]);
+          */

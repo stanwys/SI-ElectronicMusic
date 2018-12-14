@@ -1,0 +1,69 @@
+package com.sample
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+declare enum MyData
+	START("What do you prefer?",["Rock","Rap"]),
+	START_ROCK("Radiohead - OK Computer",["OK","Cool, but that's basically just rock music!"]),
+	START_RAP("Kanye West - 808s & Heartbreak",["OK","Give me some nice hip-hop beats","Come on, I want REAL rap music"]),
+	NUJABES("Nujabes - Metaphorical Music",["OK","I need more of these lush, organic sounds","Stranger! Wonkier!"]),
+	GIRL_TALK("Girl Talk - Feed the Animals",["OK","Whoa, sampling is cool, more like this!"]),
+	THE_AVALANCHES("The Avalanches - Since I Left You",["OK","More sampling, with a hip-hop vibe to it","Darker. Sadder. The samples could be messed with a little more"]),
+	SHOPPING_AISLE("Shopping Aisle",["OK","I'm liking these instrumental beats. More please"]),
+	RADIOHEAD_KIDA("Radiohead - Kid A",["OK","Cool, but I'm not quite ready to lose the guitars quite yet",
+		"Weird, but good! Maybe more electronic, but I still want vocals","Even this is too much electronic for me",
+		"I actually liked the drums and bleeps they had going on. More of that"]),
+	DARKSIDE("Darkside - Psychic",["OK","Where can I go from here?","I like this. We can lose the guitars and stuff now. I'm ready",
+		"More of the same, nut I think I'm ready for electronic music now"]),
+	THE_KNIFE("The Knife - Silent Shout",["OK","Too weird!","Take out the vocals. Focus it."]),
+	GODSPEED_YOU("Godspeed You!",["OK","I love those buildsups! I could try some electronic music that does that","I think I could handle that, but way more minimal",
+		"I like the post-rock song structure and scale"]),
+	FUCK_BUTTONS("Fuck Buttons - Tarot Sport",["OK","More, quieter though"]),
+	NEU_NEU("Neu! - Neu!",["OK","More electronic influence","This, but electronic"]),
+	KASH_DAISUKE("Kashiwa Daisuke - Program Music",["OK","I like the glitchy drums","I like the more ambient parts"]),
+	AUTECHRE_AMBER("Autechre - Amber",["OK","Cool, I guess electronic music isn't just talentless button pushing. More like this"]),	
+	APHEX_TWIN("Aphex Twin - Drukqs/ Selected Ambient Works",["OK","Cool, I guess electronic music isn't just talentless button pushing. More like this",
+		"I can't wrap my head around these drums, but I like the rest of it. No drums",
+		"Let's get a steady beat on that","These complex beats are awesome. Can they get wilder?",
+		"That sounds dated. Something more recent?"]),
+	NICOLAS_JARR("Nicolas Jarr - Space is Only Noise",["OK","This is much too busy and melodius for my tastes","More of a vocal focus"]),	
+	BONOBO("Bonobo - Black Sands",["OK","I need more of these lush, organic sounds","Chill it out"]),
+	TYCHO_DIVE("Tycho - Dive",["OK","Make it stranger. I want to listen to an educational film from the eighties"]),
+	BOARDS_CANADA("Boards of Canada - Music Has the Right to Children",["OK","I want something more \"electric feeling\""]),
+	TOKIMONSTA("TOKiMONSTA - Midnight Menu",["OK","Keep the beats, but make it dark and operatic",
+			"Even stranger! Even wonkier!","I like those beats. What if they were a bit more spaced out?",
+			"I can deal with the weird parts. I think I'm ready for the classics"]),
+	BURIAL("Burial - Untrue",["OK","Happier, Lighter, Focus on the beats, not the vocals","Drop the samples, keep the nice beats and dark atmosphere"]),
+	MASSIVE_ATTACK("Massive Attack - Mezzanine",["OK","I liked the feel of burial a little better"]),
+	//james blake is a leaf
+	FLYING_LOTUS("Flying Lotus - Cosmogramma",["OK","I want this, but in a jungle"]),
+	LONE("Lone - Galaxy Garden",["OK","Rainforest music, but slightly less crazy","I loved the strange vocals that a few of the tracks had. And the drums"]),
+	FS_LIFEFORMS("The future Sound of London - Lifeforms",["OK","I think I'm ready for some ambient now"]),
+	MACHINEDRUM("Machinedrum - Room(s)",["OK","Those drums. 10 times louder. 10 times crazier"]),
+	VENETIAN("Venetian Snares",["OK","Calm down those drums. I like the orchestral samples though"]),
+	MANUEL_GOTT("Manuel Gottsching -e2-e4",["OK","Fully electronic now"]),
+	TANGERINE("Tangerine Dream - Phaedra",["OK","More Ambient Stuff","This style of synths, but shorter songs and carelessly happy"]),
+	KLAUS_SCHULZE("Klaus Schulze",["OK","More drums","Let's get a steady beat on that"]),
+	//mort garrison is a leaf
+	ORB("Orb - The Orb's Adventures",["OK","Something a little bit less ambient maybe"]),
+	FS_ACCELERATOR("The Future Sound of London - Accelerator",["OK","I want to feel like I'm on drugs","Mix these two, but focus on fast, hard hitting drums"]),
+	GOLDIE_TIMELESS("Goldie - Timeless",["OK","This, but I want to feel like I'm exploring a frozen wasteland"]),
+	SHPONGLE("Shpongle - Are You Shpongled?",["OK","Mix these two, but focus on fast, hard hitting drums",
+	"I like this careless, fun music I can kind of dance to. Give me a big, essential, diverse collection of it"]),
+	ORBITAL_BROWN("Orbital - Brown Album",["OK","I liked Halcyon + On + ON","Mix the two","I don't ever want to stop dancing",
+	"Less melody, more subtle"]),
+	DAFT_PUNK("Daft Punk - Discovery",["OK","DIRTIER","I like this careless, fun music I can kind of dance to. Give me a big, essential, diverse collection of it",
+	"Fun stuff, but could it get a little more... Tribal?","I don't ever want to stop dancing"]),
+	JON_HOPKINS("Jon Hopkins - Immunity",["OK","I liked the heavier bits, Collider for example","I liked the piano, but not the heavy parts"]),
+	GLOBAL_COMMU("Global Communication - 76:14",["OK","Even more ambient"]),
+	BRIAN_ENO2("Brian Eno - Ambient 2:The Plateaux of Mirror",["OK","Mix the two","This album is too busy for me"]);
+	//brian eno1 is a leaf
+	//helios is a leaf
+	//justice - cross is a leaf
+	//sasha & john is a leaf
+	//villalobos is a leaf
+	
+	question : String
+	answers : java.util.List
+end 
